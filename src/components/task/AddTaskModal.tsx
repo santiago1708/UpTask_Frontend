@@ -1,28 +1,54 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useForm} from 'react-hook-form'
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import TaskForm from './TaskForm';
 import { TaskFormData } from '@/types/index';
+import { createTask } from '@/api/TaskAPI';
+import { toast } from 'react-toastify';
 
 export default function AddTaskModal() {
 
     const navigate = useNavigate()
+    /** Leer si modal esta */
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
     const modalTask = queryParams.get('newTask')
     const show = modalTask ? true : false
 
-    const initialValues : TaskFormData = {
+    /** Obtener projectId */
+
+    const params = useParams()
+    const projectId = params.projectId!
+
+    const initialValues: TaskFormData = {
         name: '',
         description: ''
     }
 
-    const { register, handleSubmit, formState: {errors}} = useForm({defaultValues: initialValues})
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues: initialValues })
+    const queryClient = useQueryClient()
+    const { mutate } = useMutation({
+        mutationFn: createTask,
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({queryKey: ['editProject', projectId]})
+            toast.success(data)
+            reset()
+            navigate(location.pathname, { replace: true })
+        },
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
 
-    const handleCreateTask = (formData : TaskFormData) => {
-        console.log(formData);
-        
+    const handleCreateTask = (formData: TaskFormData) => {
+        const data = {
+            projectId,
+            formData
+        }
+        mutate(data);
+
     }
 
     return (
@@ -70,7 +96,7 @@ export default function AddTaskModal() {
                                         noValidate
                                     >
 
-                                        <TaskForm 
+                                        <TaskForm
                                             register={register}
                                             errors={errors}
                                         />
