@@ -11,8 +11,8 @@ export async function createProject(formData: ProjectFormData) {
             throw new Error(error.response.data.error);
         }
     }
-
 }
+
 export async function getProjects() {
     try {
         const { data } = await api('/projects')
@@ -25,8 +25,8 @@ export async function getProjects() {
             throw new Error(error.response.data.error);
         }
     }
-
 }
+
 export async function getProjectbyId(id: Project['_id']) {
     try {
         const { data } = await api(`/projects/${id}`)

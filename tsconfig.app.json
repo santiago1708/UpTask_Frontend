@@ -16,6 +16,7 @@
       "@/layouts/*" : ["layouts/*"],
       "@/lib/*" : ["lib/*"],
       "@/utils/*" : ["utils/*"],
+      "@/hooks/*" : ["hooks/*"],
       "@/locales/*" : ["locales/*"]
     },
 
