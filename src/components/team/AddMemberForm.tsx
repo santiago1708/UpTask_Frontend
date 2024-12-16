@@ -65,7 +65,7 @@ export default function AddMemberForm() {
             <div className="mt-10">
                 {mutation.isPending && <p className="text-center">Cargando...</p>}
                 {mutation.error && <p className="text-center">{mutation.error.message}</p>}
-                {mutation.data && <SearchResult data={mutation.data}/>}
+                {mutation.data && <SearchResult user={mutation.data}/>}
             </div>
         </>
     )
