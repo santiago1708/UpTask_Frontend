@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { UserLoginForm } from "@/types/index";
-import { useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query';
 import ErrorMessage from "@/components/ErrorMessage";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "@/api/AuthAPI";
@@ -49,6 +49,7 @@ export default function LoginView() {
                         type="email"
                         placeholder="Email de Registro"
                         className="w-full p-3  border-gray-300 border"
+                        autoComplete="username"
                         {...register("email", {
                             required: "El Email es obligatorio",
                             pattern: {
@@ -71,6 +72,7 @@ export default function LoginView() {
                         type="password"
                         placeholder="Password de Registro"
                         className="w-full p-3  border-gray-300 border"
+                        autoComplete="current-password"
                         {...register("password", {
                             required: "El Password es obligatorio",
                         })}
