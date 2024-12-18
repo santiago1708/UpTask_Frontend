@@ -95,7 +95,6 @@ export default function TaskModalDetails() {
                                     </Dialog.Title>
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
                                     <div className='my-5 space-y-3'>
-                                        <label className='font-bold'>Estado Actual: {data.status}</label>
 
                                         <select
                                             className='w-full p-3 bg-white border border-gray-300'

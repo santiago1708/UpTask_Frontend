@@ -6,6 +6,7 @@ import TaskModalDetails from "@/components/task/TaskModalDetails"
 import { useAuth } from "@/hooks/useAuth"
 import { isManager } from "@/utils/policies"
 import { useQuery } from "@tanstack/react-query"
+import { useMemo } from "react"
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
 
 export default function ProjectDetailsView() {
@@ -19,6 +20,8 @@ export default function ProjectDetailsView() {
         queryKey: ['project', projectId],
         queryFn: () => getProjectbyId(projectId),
     })
+
+    const canEdit = useMemo(() =>  data?.manager === user?._id,[data, user])
 
     if (isLoading && authLoading) return 'Cargando...'
     if (isError) return <Navigate to='/404' />
@@ -48,6 +51,7 @@ export default function ProjectDetailsView() {
 
             <TaskList
                 tasks={data.tasks}
+                canEdit={canEdit}
             />
             <AddTaskModal />
             <EditTaskData />
