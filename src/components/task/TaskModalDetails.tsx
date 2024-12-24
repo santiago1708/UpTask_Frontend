@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getTaskById, updateStatus } from '@/api/TaskAPI';
 import { toast } from 'react-toastify';
 import { formatDate } from '@/utils/utils';
@@ -100,7 +100,7 @@ export default function TaskModalDetails() {
 
                                     {data.completedBy.length ? (
                                         <div className="space-y-4">
-                                            <p className="text-lg text-slate-500 font-semibold mb-4">
+                                            <p className="font-bold text-2xl text-slate-600 my-5">
                                                 Historial de cambios
                                             </p>
 
@@ -141,7 +141,7 @@ export default function TaskModalDetails() {
                                         </select>
                                     </div>
 
-                                    <NotesPanel />
+                                    <NotesPanel notes={data.notes} />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
