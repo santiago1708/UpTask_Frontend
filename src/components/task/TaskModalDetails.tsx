@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { formatDate } from '@/utils/utils';
 import { statusTranslations } from '@/locales/es';
 import { TaskStatus } from '@/types/index';
+import NotesPanel from '../notes/NotesPanel';
 
 export default function TaskModalDetails() {
 
@@ -97,34 +98,37 @@ export default function TaskModalDetails() {
                                     </Dialog.Title>
                                     <p className='text-lg text-slate-500 mb-2'>Descripción: {data.description}</p>
 
-                                    <div className="space-y-4">
-                                        <p className="text-lg text-slate-500 font-semibold mb-4">
-                                            Historial de cambios
-                                        </p>
+                                    {data.completedBy.length ? (
+                                        <div className="space-y-4">
+                                            <p className="text-lg text-slate-500 font-semibold mb-4">
+                                                Historial de cambios
+                                            </p>
 
-                                        <ul className="relative border-l-2 border-slate-300">
-                                            {data.completedBy.map((activityLog, index) => (
-                                                <li key={activityLog._id} className="mb-6 ml-6">
-                                                    <div className="absolute -left-3 w-6 h-6 bg-slate-500 rounded-full border-4 border-white flex items-center justify-center">
-                                                        <span className="text-xs text-white">
-                                                            {index + 1}
-                                                        </span>
-                                                    </div>
-                                                    <div className="text-sm">
-                                                        <span className="font-bold text-slate-600">
-                                                            {statusTranslations[activityLog.status]}
-                                                        </span>{" "}
-                                                        <span className="text-slate-500">por:</span>{" "}
-                                                        <span className="text-slate-700">
-                                                            {activityLog.user.name}
-                                                        </span>
-                                                    </div>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
+                                            <ul className="relative border-l-2 border-slate-300">
+                                                {data.completedBy.map((activityLog, index) => (
+                                                    <li key={activityLog._id} className="mb-6 ml-6">
+                                                        <div className="absolute -left-3 w-6 h-6 bg-slate-500 rounded-full border-4 border-white flex items-center justify-center">
+                                                            <span className="text-xs text-white">
+                                                                {index + 1}
+                                                            </span>
+                                                        </div>
+                                                        <div className="text-sm">
+                                                            <span className="font-bold text-slate-600">
+                                                                {statusTranslations[activityLog.status]}
+                                                            </span>{" "}
+                                                            <span className="text-slate-500">por:</span>{" "}
+                                                            <span className="text-slate-700">
+                                                                {activityLog.user.name}
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ) : null
+                                    }
 
-                                    <div className='my-5 space-y-3'>
+                                    < div className='my-5 space-y-3'>
 
                                         <select
                                             className='w-full p-3 bg-white border border-gray-300'
@@ -136,12 +140,14 @@ export default function TaskModalDetails() {
                                             ))}
                                         </select>
                                     </div>
+
+                                    <NotesPanel />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
                     </div>
                 </Dialog>
-            </Transition>
+            </Transition >
         </>
     )
 }
