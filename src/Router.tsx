@@ -12,26 +12,33 @@ import RequestNewCodeView from './views/auth/RequestNewCodeView'
 import ForgotPasswordView from './views/auth/ForgotPasswordView'
 import NewPasswordView from './views/auth/NewPasswordView'
 import ProjectTeamVIew from './views/projects/ProjectTeamVIew'
+import ProfileView from './views/profile/ProfileView'
+import ChangePassword from './views/profile/ChangePassword'
+import ProfileLayout from './layouts/ProfileLayout'
 
 export default function Router() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<AppLayout />}>
-                    <Route path='/' element={<DashboardView />} index/>
-                    <Route path='/projects/create' element={<CreateProjectView />}/>
-                    <Route path='/projects/:projectId' element={<ProjectDetailsView />}/>
-                    <Route path='/projects/:projectId/edit' element={<EditProjectView />}/>
-                    <Route path='/projects/:projectId/team' element={<ProjectTeamVIew />}/>
+                    <Route path='/' element={<DashboardView />} index />
+                    <Route path='/projects/create' element={<CreateProjectView />} />
+                    <Route path='/projects/:projectId' element={<ProjectDetailsView />} />
+                    <Route path='/projects/:projectId/edit' element={<EditProjectView />} />
+                    <Route path='/projects/:projectId/team' element={<ProjectTeamVIew />} />
+                    <Route element={<ProfileLayout />}>
+                        <Route path='/profile' element={<ProfileView />} />
+                        <Route path='/profile/password' element={<ChangePassword />} />
+                    </Route>
                 </Route>
 
                 <Route element={<AuthLayout />}>
-                    <Route path='/auth/login' element={<LoginView />}/>
-                    <Route path='/auth/register' element={<RegisterView />}/>
-                    <Route path='/auth/confirm-account' element={<ConfirmAccountView />}/>
-                    <Route path='/auth/request-code' element={<RequestNewCodeView />}/>
-                    <Route path='/auth/forgot-password' element={<ForgotPasswordView />}/>
-                    <Route path='/auth/new-password' element={<NewPasswordView />}/>
+                    <Route path='/auth/login' element={<LoginView />} />
+                    <Route path='/auth/register' element={<RegisterView />} />
+                    <Route path='/auth/confirm-account' element={<ConfirmAccountView />} />
+                    <Route path='/auth/request-code' element={<RequestNewCodeView />} />
+                    <Route path='/auth/forgot-password' element={<ForgotPasswordView />} />
+                    <Route path='/auth/new-password' element={<NewPasswordView />} />
                 </Route>
             </Routes>
         </BrowserRouter>
