@@ -4,9 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ErrorMessage";
 import { CheckPasswordForm } from '@/types/index';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { checkPassword } from '@/api/AuthAPI';
 import { toast } from 'react-toastify';
+import { deleteProject } from '@/api/ProjectAPI';
 
 export default function DeleteProjectModal() {
     const initialValues = {
@@ -21,6 +22,7 @@ export default function DeleteProjectModal() {
 
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
+    const queryClient = useQueryClient()
     const checkPasswordMutation = useMutation({
         mutationFn: checkPassword, 
         onError: (error) => {
@@ -28,8 +30,21 @@ export default function DeleteProjectModal() {
         }
     })
 
+    const deleteProjectMutation = useMutation({
+        mutationFn: deleteProject,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['projects'] })
+            toast.success(data)
+            navigate(location.pathname, { replace: true })
+        }
+    })
+
     const handleForm = async (formData : CheckPasswordForm) => { 
         await checkPasswordMutation.mutateAsync(formData)
+        await deleteProjectMutation.mutateAsync(deleteProjectId)
     }
 
 
